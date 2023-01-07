@@ -10,10 +10,28 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          var e = this._userTransactions[index];
-          return Card(
+      child: _userTransactions.isEmpty
+          ? Column(
+              children: [
+                Text(
+                  "No data found",
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                    height: 200,
+                    child: Image.asset(
+                      'assets/images/waiting.png',
+                      fit: BoxFit.cover,
+                    ))
+              ],
+            )
+          : ListView.builder(
+              itemBuilder: (context, index) {
+                var e = this._userTransactions[index];
+                return Card(
                   child: Row(
                     children: [
                       Container(
@@ -23,7 +41,7 @@ class TransactionList extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                             border: Border.all(
-                          color: Colors.purple,
+                          color: Theme.of(context).primaryColor,
                           width: 2,
                         )),
                         padding: EdgeInsets.all(5),
@@ -32,7 +50,7 @@ class TransactionList extends StatelessWidget {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
-                            color: Colors.purple,
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                       ),
@@ -41,10 +59,7 @@ class TransactionList extends StatelessWidget {
                         children: [
                           Text(
                             e.title,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17,
-                            ),
+                            style: Theme.of(context).textTheme.titleSmall,
                           ),
                           Text(
                             DateFormat.yMMMd().format(e.date),
@@ -58,9 +73,9 @@ class TransactionList extends StatelessWidget {
                     ],
                   ),
                 );
-        },
-        itemCount: _userTransactions.length,
-      ),
+              },
+              itemCount: _userTransactions.length,
+            ),
     );
   }
 }

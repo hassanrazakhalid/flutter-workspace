@@ -18,26 +18,37 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          primarySwatch: Colors.purple,
+          accentColor: Colors.amber,
+          fontFamily: 'Quicksand',
+          textTheme: ThemeData.light().textTheme.copyWith(
+                  titleSmall: TextStyle(
+                fontFamily: 'OpenSans',
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              )),
+          appBarTheme: AppBarTheme(
+            titleTextStyle: TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 20,
+            ),
+          )),
       home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-final List<Transaction> _userTransactions = [
-    Transaction(
-        id: '1', title: 'New Shoes', amount: 59.87, date: DateTime.now()),
-    Transaction(
-        id: '2', title: 'Week grocery', amount: 49.87, date: DateTime.now()),
+  final List<Transaction> _userTransactions = [
+    // Transaction(
+    //     id: '1', title: 'New Shoes', amount: 59.87, date: DateTime.now()),
+    // Transaction(
+    //     id: '2', title: 'Week grocery', amount: 49.87, date: DateTime.now()),
   ];
 
   _newTransactionAdded(String title, double price) {
@@ -56,14 +67,15 @@ final List<Transaction> _userTransactions = [
   }
 
   void startNewTransaction(BuildContext ctx) {
-
-    showModalBottomSheet(context: ctx, builder: (bCtx) {
-        return GestureDetector(
-          // onTap: () {},
-          // behavior: HitTestBehavior.opaque,
-          child: NewTransaction(transactionAdded: _newTransactionAdded),
+    showModalBottomSheet(
+        context: ctx,
+        builder: (bCtx) {
+          return GestureDetector(
+            // onTap: () {},
+            // behavior: HitTestBehavior.opaque,
+            child: NewTransaction(transactionAdded: _newTransactionAdded),
           );
-    });
+        });
   }
 
   @override
@@ -72,14 +84,20 @@ final List<Transaction> _userTransactions = [
       appBar: AppBar(
         title: Text('Expense App'),
         actions: [
-          IconButton(onPressed: () {
+          IconButton(
+            onPressed: () {
               startNewTransaction(context);
-          },icon: Icon(Icons.add),)
+            },
+            icon: Icon(Icons.add),
+          )
         ],
       ),
-      floatingActionButton: FloatingActionButton(child: Icon(Icons.add), onPressed: () {
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
           startNewTransaction(context);
-      },),
+        },
+      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
