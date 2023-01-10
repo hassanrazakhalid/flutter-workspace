@@ -33,34 +33,36 @@ if(title.isEmpty || amount < 0) {
   @override
   Widget build(BuildContext context) {
 
-    return Card(
-      elevation: 5,
-      child: Container(
-        padding: EdgeInsets.all(5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            TextField(
-              controller: titleController,
-              decoration: InputDecoration(labelText: 'Title'),
-              onSubmitted: (_) => _submitCalled(),
-              onChanged: (value) => {titleInput = value},
-            ),
-            TextField(
-              controller: amountController,
-              decoration: InputDecoration(labelText: 'Amount'),
-              keyboardType: TextInputType.number,
-              onSubmitted: (_) => _submitCalled(),
-              onChanged: (text) => {amountInput = text},
-            ),
-            TextButton(
-              child: Text('Add transaction'),
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.purple,
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Container(
+          padding: EdgeInsets.only(top: 5, left: 5, right: 5, bottom: MediaQuery.of(context).viewInsets.bottom + 5,),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextField(
+                controller: titleController,
+                decoration: const InputDecoration(labelText: 'Title'),
+                onSubmitted: (_) => _submitCalled(),
+                onChanged: (value) => {titleInput = value},
               ),
-              onPressed: _submitCalled,
-            )
-          ],
+              TextField(
+                controller: amountController,
+                decoration: const InputDecoration(labelText: 'Amount'),
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => _submitCalled(),
+                onChanged: (text) => {amountInput = text},
+              ),
+              TextButton(
+                child: Text('Add transaction'),
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.purple,
+                ),
+                onPressed: _submitCalled,
+              )
+            ],
+          ),
         ),
       ),
     );

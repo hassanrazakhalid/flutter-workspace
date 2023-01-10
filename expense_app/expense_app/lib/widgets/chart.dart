@@ -16,15 +16,14 @@ class Chart extends StatelessWidget {
   final List<Transaction> recentTransactions;
 
   List<ChartModel> get groupTransactionValues {
-    return List.generate(2, (index) {
-      final model = recentTransactions[index];
+    return List.generate(7, (index) {
       final weekday = DateTime.now().subtract(Duration(days: index));
       double sum = 0;
-      for (var element in recentTransactions) {
+      for (var model in recentTransactions) {
         if (weekday.month == model.date.month &&
             weekday.year == model.date.year &&
             weekday.day == model.date.day) {
-          sum += element.amount;
+          sum += model.amount;
         }
       }
       return ChartModel(

@@ -1,5 +1,6 @@
 import 'package:expense_app/widgets/chart.dart';
 import 'package:expense_app/widgets/new_transaction.dart';
+import 'package:flutter/services.dart';
 
 import 'models/transaction.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,11 @@ import './widgets/user_transactions.dart';
 import 'widgets/transaction_list.dart';
 
 void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitDown,
+  //   DeviceOrientation.portraitUp,
+  // ]);
   runApp(const MyApp());
 }
 
@@ -44,12 +50,12 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver  {
   final List<Transaction> _userTransactions = [
-    Transaction(
-        id: '1', title: 'New Shoes', amount: 59.87, date: DateTime.now()),
-    Transaction(
-        id: '2', title: 'Week grocery', amount: 49.87, date: DateTime.now()),
+    // Transaction(
+    //     id: '1', title: 'New Shoes', amount: 59.87, date: DateTime.now()),
+    // Transaction(
+    //     id: '2', title: 'Week grocery', amount: 49.87, date: DateTime.now()),
   ];
 
   List<Transaction> get _recenetTransactions {
@@ -58,6 +64,23 @@ class _MyHomePageState extends State<MyHomePage> {
               days: 7,
             ))))
         .toList();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) { 
+
+  }
+
+  @override
+  dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   _newTransactionAdded(String title, double price) {
@@ -86,11 +109,10 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         });
   }
-
+ 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    var appBar = AppBar(
         title: Text('Expense App'),
         actions: [
           IconButton(
@@ -100,7 +122,9 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.add),
           )
         ],
-      ),
+      );
+    return Scaffold(
+      appBar: appBar,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
@@ -113,13 +137,16 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
+              height: (MediaQuery.of(context).size.height * 0.3) - MediaQuery.of(context).padding.top - appBar.preferredSize.height,
               padding: EdgeInsets.zero,
               width: double.infinity,
               child: Chart(
                 recentTransactions: _recenetTransactions,
               ),
             ),
-            TransactionList(_userTransactions),
+            Container(
+              height: (MediaQuery.of(context).size.height * 0.7) - MediaQuery.of(context).padding.top - appBar.preferredSize.height,
+              child: TransactionList(_userTransactions)),
           ],
         ),
       ),
