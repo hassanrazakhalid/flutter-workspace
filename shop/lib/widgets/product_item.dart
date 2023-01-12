@@ -40,8 +40,8 @@ class ProductItem extends StatelessWidget {
             //     ),
             //   ),
             // );
-            Navigator.of(context).pushNamed(ProductDetailScreen.routName,
-                arguments: {'title': title});
+            Navigator.of(context)
+                .pushNamed(ProductDetailScreen.routName, arguments: {'id': id});
           },
           child: Image.network(
             imageUrl,
