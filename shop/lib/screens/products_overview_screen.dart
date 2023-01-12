@@ -5,6 +5,7 @@ import 'package:shop/widgets/badge.dart';
 import '../providers/cart.dart';
 import '../providers/product.dart';
 import '../providers/products.dart';
+import '../widgets/cart_screen.dart';
 import '../widgets/product_item.dart';
 import '../widgets/products_grid.dart';
 
@@ -68,7 +69,9 @@ class _ProductsOverViewScreenState extends State<ProductsOverViewScreen> {
               value: "${cart.itemsCount}",
             ),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
               icon: Icon(Icons.shopping_cart),
             ),
           )

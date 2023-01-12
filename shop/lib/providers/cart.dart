@@ -25,6 +25,11 @@ class Cart with ChangeNotifier {
     return _items.length;
   }
 
+  double get totalAmount {
+    return _items.values.fold(
+        0, (value, element) => (element.price * element.quantity) + value);
+  }
+
   void addItem(Product product) {
     if (_items.containsKey(product.id)) {
       // _items.update(product,items, (value) => null)
@@ -39,6 +44,16 @@ class Cart with ChangeNotifier {
             price: product.price),
       );
     }
+    notifyListeners();
+  }
+
+  void removeItem(String productId) {
+    _items.remove(productId);
+    notifyListeners();
+  }
+
+  void clearCart() {
+    _items = {};
     notifyListeners();
   }
 }
