@@ -40,6 +40,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   void _saveButtonPressed() {
+    _form.currentState?.validate();
     _form.currentState?.save();
     print(product.title);
     print(product.price);
@@ -72,6 +73,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_priceFocusNode);
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty)
+                    return 'Title is required';
+
+                  return null;
                 },
                 onSaved: (value) => product.title = value ?? '',
               ),
